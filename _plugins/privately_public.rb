@@ -4,7 +4,7 @@ require 'digest'
 #
 # Jekyll publisher for privateley public posts.
 #
-# Version: 0.0.2
+# Version: 0.1.0
 #
 # Copyright (c) 2013 Brian Pearce, http://www.alwayscoding.ca
 # Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
@@ -80,4 +80,10 @@ module Jekyll
   end
 end
 
+if defined?(SitemapGenerator)
+  class Jekyll::SitemapGenerator
+    def excluded?(name)
+      !EXCLUDED_FILES.select {|e| e.match(name)}.nil?
+    end
+  end
 end
