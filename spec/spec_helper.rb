@@ -10,6 +10,8 @@ require './_plugins/privately_public'
 
 include Jekyll
 
+STDERR.reopen(test(?e, '/dev/null') ? '/dev/null' : 'NUL:')
+
 def clear_dest
   FileUtils.rm_rf(dest_dir)
 end
