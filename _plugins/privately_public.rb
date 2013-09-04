@@ -73,8 +73,8 @@ module Jekyll
           post = PrivatelyPublicPost.new(site, site.source, '', f)
 
           if post.data.has_key?('privpub') && post.data['privpub'] == true
-            Jekyll.logger.info('Privpub', 'Generated privately public links:')
-            Jekyll.logger.info('Privpub',  "  #{post.permalink}")
+            Jekyll.logger.message('Privpub', 'Generated privately public links:')
+            Jekyll.logger.message('Privpub',  "  #{post.permalink}")
             self.privpub_post_count = self.privpub_post_count + 1
             site.privpub_posts << post
           end
