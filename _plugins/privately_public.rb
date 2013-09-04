@@ -1,3 +1,4 @@
+
 require 'digest'
 
 # encoding: utf-8
@@ -46,7 +47,7 @@ module Jekyll
       end
 
       def read_posts(site, dir = '')
-        entries = site.get_entries(dir, '_posts')
+        entries = get_entries(site, dir, '_posts')
 
         # first pass processes, but does not yet render post content
         entries.each do |f|
@@ -61,12 +62,19 @@ module Jekyll
         end
       end
 
+      def get_entries(site, dir, subfolder)
+        base = File.join(site.source, dir, subfolder)
+        return [] unless File.exists?(base)
+        entries = Dir.chdir(base) { site.filter_entries(Dir['**/*']) }
+        entries.delete_if { |e| File.directory?(File.join(base, e)) }
+      end
+
       def display_results
         if !@privpub_posts.empty?
-          Jekyll.logger.message('PrivatelyPublic:', 'Generated privately public links:')
+          puts 'Generated privately public links:'
 
           @privpub_posts.each do |p|
-            Jekyll.logger.message('',  "- #{p.permalink}")
+            puts "- #{p.permalink}"
           end
         end
       end
