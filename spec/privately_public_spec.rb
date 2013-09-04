@@ -2,6 +2,7 @@ require './spec/spec_helper'
 
 describe Jekyll::Post do
   before do
+    clear_dest
     stub(Jekyll).configuration do
       Jekyll::Configuration::DEFAULTS.merge({'source' => source_dir,
                                              'destination' => dest_dir})
@@ -9,10 +10,13 @@ describe Jekyll::Post do
 
     @site = Site.new(Jekyll.configuration)
     @site.process
-    @index = File.read(dest_dir('index.html'))
   end
 
-  it 'will fail' do
-    true.must_be false
+  it 'adds 1 post to the privpub_posts collection' do
+    @site.privpub_posts.count.must_equal 1
+  end
+
+  it 'generated 1 file in the private dir' do
+    Dir.glob("#{dest_dir('private')}/*").count.must_equal 1
   end
 end
