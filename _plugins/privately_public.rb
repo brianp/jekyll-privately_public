@@ -15,76 +15,69 @@ require 'digest'
 
 module Jekyll
 
-  class Site
-    attr_accessor :privpub_posts
+  module PrivatelyPublic
 
-    alias_method :previous_reset, :reset
-    def reset
-      self.privpub_posts = []
-      previous_reset
-    end
-
-    alias_method :previous_render, :render
-    def render
-      payload = site_payload
-      self.privpub_posts.each do |post|
-        post.render(self.layouts, payload)
+    class Post < Jekyll::Post
+      def permalink
+        "/private/#{digest}/#{CGI.escape(slug)}"
       end
-      previous_render
-    rescue Errno::ENOENT => e
-      # ignore missing layout dir
-    end
 
-    alias_method :previous_write, :write
-    def write
-      self.privpub_posts.each do |post|
-        post.write(self.dest)
+      def html?
+        true
       end
-      previous_write
-    end
-  end
 
-  class PrivatelyPublicPost < Post
-    #Use a digest so the link isn't re-scrambled on site generation
-    def permalink
-      "/private/#{Digest::SHA1.hexdigest(slug)[0...6]}/#{CGI.escape(slug)}"
-    end
-  end
+      def uses_relative_permalinks
+        permalink && @dir != "" && site.config['relative_permalinks']
+      end
 
-  class PrivatelyPublicPostGenerator < Generator
-    safe true
+      protected
 
-    attr_accessor :privpub_post_count
-
-    def initialize(*args)
-      self.privpub_post_count = 0
-      super(args)
+      def digest
+        CGI.escape(Digest::SHA1.hexdigest(slug)[0...6])
+      end
     end
 
-    def read_posts(site, dir = '')
-      base = File.join(site.source, dir, '_posts')
-      return unless File.exists?(base)
-      entries = Dir.chdir(base) { site.filter_entries(Dir['**/*']) }
+    class Generator < Jekyll::Generator
+      safe true
+      priority :normal
 
-      # first pass processes, but does not yet render post content
-      entries.each do |f|
-        dir = File.join('', f)
-        if Post.valid?(f)
-          post = PrivatelyPublicPost.new(site, site.source, '', f)
+      def initialize(config = {})
+        @privpub_posts = []
+      end
 
-          if post.data.has_key?('privpub') && post.data['privpub'] == true
-            Jekyll.logger.message('Privpub', 'Generated privately public links:')
-            Jekyll.logger.message('Privpub',  "  #{post.permalink}")
-            self.privpub_post_count = self.privpub_post_count + 1
-            site.privpub_posts << post
+      def read_posts(site, dir = '')
+        entries = site.get_entries(dir, '_posts')
+
+        # first pass processes, but does not yet render post content
+        entries.each do |f|
+          if Post.valid?(f)
+            post = Post.new(site, site.source, '', f)
+
+            if post.data.has_key?('privpub') && post.data['privpub'] == true
+              @privpub_posts << post
+              site.pages << post
+            end
           end
         end
       end
+
+      def display_results
+        if !@privpub_posts.empty?
+          Jekyll.logger.message('PrivatelyPublic:', 'Generated privately public links:')
+
+          @privpub_posts.each do |p|
+            Jekyll.logger.message('',  "- #{p.permalink}")
+          end
+        end
+      end
+
+      def generate(site)
+        read_posts(site)
+        display_results
+      end
     end
 
-    def generate(site)
-      read_posts(site)
-    end
   end
+end
 
 end
