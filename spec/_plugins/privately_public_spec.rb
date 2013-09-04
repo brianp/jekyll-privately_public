@@ -1,6 +1,6 @@
 require './spec/spec_helper'
 
-describe Jekyll::Post do
+describe Jekyll::PrivatelyPublicPost do
   before do
     clear_dest
     stub(Jekyll).configuration do
