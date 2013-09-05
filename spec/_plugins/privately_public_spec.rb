@@ -66,7 +66,7 @@ describe Jekyll::PrivatelyPublic do
         gen.generate(@site)
       end
 
-      expectation = "   PrivatelyPublic: Generated privately public links:\n                    - /private/0426e1/privpub-post\n"
+      expectation = "Generated privately public links:\n- /private/0426e1/privpub-post\n"
       out.must_equal expectation
     end
   end
