@@ -3,13 +3,13 @@
 A generator that creates privately public pages. Pages secured by url obscurity.
 
 ## Why?
-The use case for privately public posts are when you have a page drafted
-but aren't ready to publish it yet. You are ready to share it with close
+The use case for having privately public posts is when you have a page drafted
+but aren't ready to publicly publish it yet. You are ready to share it with close
 friends to have them proof your horrible grammar though. It publishes
 your post with a secret url you can share. Security through obscurity!
 
 ## Usage
-Copy the `_plugins/privately_public.rb` file into your projects plugin
+Copy the `_plugins/privately_public.rb` file into your jekyll/octopress projects plugin
 folder. Now in your posts YAML front-matter add the key `privpub:
 true`.
 
@@ -28,3 +28,8 @@ can grab the link from there:
 
 You can now copy the relative path to access the privately public page
 and share it with friends!
+
+## Octopress
+Octopress runs on an older version of jekyll so checkout the
+`octopress-v2` branch for a plugin with backwards compatability with
+older versions of jekyll.
