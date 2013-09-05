@@ -1,4 +1,3 @@
-
 require 'digest'
 
 # encoding: utf-8
@@ -43,7 +42,7 @@ module Jekyll
       priority :normal
 
       def initialize(config = {})
-        @privpub_posts = []
+        setup
       end
 
       def read_posts(site, dir = '')
@@ -79,7 +78,12 @@ module Jekyll
         end
       end
 
+      def setup
+        @privpub_posts = []
+      end
+
       def generate(site)
+        setup
         read_posts(site)
         display_results
       end
