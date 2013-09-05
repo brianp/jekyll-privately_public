@@ -1,7 +1,7 @@
 source "http://rubygems.org"
 
 group :development, :test do
-  gem 'jekyll'
+  gem 'jekyll',         '~>0.12.0'
   gem 'minitest',       '~>5.0.6'
   gem 'rr'
   gem 'pry'
