@@ -12,7 +12,7 @@ describe Jekyll::PrivatelyPublic do
     @site = Site.new(Jekyll.configuration)
     @site.process
 
-    @private_url = '/private/9dbee0/published-post'
+    @private_url = '/private/0426e1/privpub-post'
   end
 
   after do
@@ -35,7 +35,7 @@ describe Jekyll::PrivatelyPublic do
     subject { Jekyll::PrivatelyPublic::Post }
 
     it 'creates the same url multiple times' do
-      entry = @site.posts.first.name
+      entry = @site.pages.first.name
       post = subject.new(@site, source_dir, '', entry)
 
       post.permalink.must_equal @private_url
