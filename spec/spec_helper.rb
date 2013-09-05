@@ -28,3 +28,22 @@ end
 def test_dir(*subdirs)
   File.join(File.dirname(__FILE__), *subdirs)
 end
+
+def capture_stdout
+  $old_stdout = $stdout
+  $stdout = StringIO.new
+  yield
+  $stdout.rewind
+  return $stdout.string
+ensure
+  $stdout = $old_stdout
+end
+
+def suppress_output
+  $suppressed_stdout = $stdout
+  $stdout = StringIO.new
+end
+
+def unsuppress_output
+  $stdout = $suppressed_stdout
+end
