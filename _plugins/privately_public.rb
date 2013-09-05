@@ -42,7 +42,7 @@ module Jekyll
       priority :normal
 
       def initialize(config = {})
-        @privpub_posts = []
+        setup
       end
 
       def read_posts(site, dir = '')
@@ -63,15 +63,20 @@ module Jekyll
 
       def display_results
         if !@privpub_posts.empty?
-          Jekyll.logger.message('PrivatelyPublic:', 'Generated privately public links:')
+          puts Jekyll.logger.message('PrivatelyPublic:', 'Generated privately public links:')
 
           @privpub_posts.each do |p|
-            Jekyll.logger.message('',  "- #{p.permalink}")
+            puts Jekyll.logger.message('',  "- #{p.permalink}")
           end
         end
       end
 
+      def setup
+        @privpub_posts = []
+      end
+
       def generate(site)
+        setup
         read_posts(site)
         display_results
       end
