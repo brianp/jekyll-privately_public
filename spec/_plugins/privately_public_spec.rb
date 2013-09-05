@@ -49,5 +49,16 @@ describe Jekyll::PrivatelyPublic do
       gen.read_posts(@site)
       @site.pages.count.must_equal 1
     end
+
+    it 'resets the privpub_posts to not double up result output' do
+      gen = subject.new
+      2.times { gen.generate(@site) }
+      @site.pages.count.must_equal 1
+    end
+
+    it 'resets the privpub_posts to not double up result output' do
+      2.times { @site.process }
+      @site.pages.count.must_equal 1
+    end
   end
 end
