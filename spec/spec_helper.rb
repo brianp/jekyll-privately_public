@@ -7,7 +7,7 @@ require 'minitest/pride'
 require 'rr'
 require 'jekyll'
 
-require './_plugins/privately_public'
+Dir["./_plugins/**/*.rb"].each {|f| require f}
 
 include Jekyll
 
