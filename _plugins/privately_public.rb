@@ -85,10 +85,13 @@ module Jekyll
   end
 end
 
-if defined?(SitemapGenerator)
+# If sitemap generator is present load it first so we can we-rite it's methods
+begin; require './_plugins/sitemap_generator'; rescue LoadError; end
+if defined?(Jekyll::SitemapGenerator)
   class Jekyll::SitemapGenerator
-    def excluded?(name)
-      !EXCLUDED_FILES.select {|e| e.match(name)}.nil?
+    def excluded?(post)
+      result = !EXCLUDED_FILES.select {|e| !!e.match(post.name)}.empty?
+      puts "#{post.name} result is #{result}"
     end
   end
 end
