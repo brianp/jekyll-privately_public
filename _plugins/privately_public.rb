@@ -71,13 +71,19 @@ module Jekyll
         end
       end
 
+      def cache_names
+        @privpub_post_names = @privpub_posts.map{ |p| p.name }
+      end
+
       def setup
         @privpub_posts = []
+        @pirvpub_post_names = []
       end
 
       def generate(site)
         setup
         read_posts(site)
+        cache_names
         display_results
       end
     end
