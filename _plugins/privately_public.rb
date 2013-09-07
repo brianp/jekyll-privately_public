@@ -15,7 +15,11 @@ require 'digest'
 
 module Jekyll
 
-  module PrivatelyPublic
+  class PrivatelyPublic
+
+    class << self
+      attr_accessor :post_names
+    end
 
     class Post < Jekyll::Post
       def permalink
@@ -55,6 +59,7 @@ module Jekyll
 
             if post.data.has_key?('privpub') && post.data['privpub'] == true
               @privpub_posts << post
+              Jekyll::PrivatelyPublic.post_names << post.name
               site.pages << post
             end
           end
@@ -71,19 +76,14 @@ module Jekyll
         end
       end
 
-      def cache_names
-        @privpub_post_names = @privpub_posts.map{ |p| p.name }
-      end
-
       def setup
         @privpub_posts = []
-        @pirvpub_post_names = []
+        Jekyll::PrivatelyPublic.post_names = []
       end
 
       def generate(site)
         setup
         read_posts(site)
-        cache_names
         display_results
       end
     end
@@ -95,9 +95,8 @@ end
 begin; require './_plugins/sitemap_generator'; rescue LoadError; end
 if defined?(Jekyll::SitemapGenerator)
   class Jekyll::SitemapGenerator
-    def excluded?(post)
-      result = !EXCLUDED_FILES.select {|e| !!e.match(post.name)}.empty?
-      puts "#{post.name} result is #{result}"
+    def excluded?(name)
+      (!EXCLUDED_FILES.include?(name) || !Jekyll::PrivatelyPublic.post_names.include?(name))
     end
   end
 end
