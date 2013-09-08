@@ -5,7 +5,7 @@ describe Jekyll::PrivatelyPublic do
     clear_dest
     suppress_output
     stub(Jekyll).configuration do
-      Jekyll::Configuration::DEFAULTS.merge({'source' => source_dir,
+      Jekyll::DEFAULTS.merge({'source' => source_dir,
                                              'destination' => dest_dir})
     end
 
