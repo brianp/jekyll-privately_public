@@ -35,7 +35,7 @@ describe Jekyll::PrivatelyPublic do
     subject { Jekyll::PrivatelyPublic::Post }
 
     it 'creates the same url multiple times' do
-      entry = @site.pages.first.name
+      entry = @site.privpub_posts.first.name
       post = subject.new(@site, source_dir, '', entry)
 
       post.permalink.must_equal @private_url
@@ -52,12 +52,12 @@ describe Jekyll::PrivatelyPublic do
     it 'adds one privpub post to the pages array' do
       gen = subject.new
       gen.read_posts(@site)
-      @site.pages.count.must_equal 1
+      @site.privpub_posts.count.must_equal 1
     end
 
     it 'ensures only one page will be created after multiple processes' do
       2.times { @site.process }
-      @site.pages.count.must_equal 1
+      @site.privpub_posts.count.must_equal 1
     end
 
     it 'verifies the output contains a single post' do
