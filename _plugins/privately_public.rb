@@ -4,7 +4,7 @@ require 'digest'
 #
 # Jekyll publisher for privateley public posts.
 #
-# Version: 0.1.0
+# Version: 0.2.0.octopress
 #
 # Copyright (c) 2013 Brian Pearce, http://www.alwayscoding.ca
 # Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
@@ -15,19 +15,40 @@ require 'digest'
 
 module Jekyll
 
-  module PrivatelyPublic
+  class Site
+    attr_accessor :privpub_posts
+
+    alias_method :previous_reset, :reset
+    def reset
+      self.privpub_posts = []
+      previous_reset
+    end
+
+    alias_method :previous_render, :render
+    def render
+      payload = site_payload
+      self.privpub_posts.each do |post|
+        post.render(self.layouts, payload)
+      end
+      previous_render
+    rescue Errno::ENOENT => e
+      # ignore missing layout dir
+    end
+
+    alias_method :previous_write, :write
+    def write
+      self.privpub_posts.each do |post|
+        post.write(self.dest)
+      end
+      previous_write
+    end
+  end
+
+  class PrivatelyPublic
 
     class Post < Jekyll::Post
       def permalink
         "/private/#{digest}/#{CGI.escape(slug)}"
-      end
-
-      def html?
-        true
-      end
-
-      def uses_relative_permalinks
-        permalink && @dir != "" && site.config['relative_permalinks']
       end
 
       protected
@@ -41,10 +62,6 @@ module Jekyll
       safe true
       priority :normal
 
-      def initialize(config = {})
-        setup
-      end
-
       def read_posts(site, dir = '')
         entries = get_entries(site, dir, '_posts')
 
@@ -54,8 +71,7 @@ module Jekyll
             post = Post.new(site, site.source, '', f)
 
             if post.data.has_key?('privpub') && post.data['privpub'] == true
-              @privpub_posts << post
-              site.pages << post
+              site.privpub_posts << post
             end
           end
         end
@@ -78,24 +94,11 @@ module Jekyll
         end
       end
 
-      def setup
-        @privpub_posts = []
-      end
-
       def generate(site)
-        setup
         read_posts(site)
-        display_results
+        display_results(site)
       end
     end
 
-  end
-end
-
-if defined?(SitemapGenerator)
-  class Jekyll::SitemapGenerator
-    def excluded?(name)
-      !EXCLUDED_FILES.select {|e| e.match(name)}.nil?
-    end
   end
 end
