@@ -84,11 +84,11 @@ module Jekyll
         entries.delete_if { |e| File.directory?(File.join(base, e)) }
       end
 
-      def display_results
-        if !@privpub_posts.empty?
+      def display_results(site)
+        if !site.privpub_posts.empty?
           puts 'Generated privately public links:'
 
-          @privpub_posts.each do |p|
+          site.privpub_posts.each do |p|
             puts "- #{p.permalink}"
           end
         end
