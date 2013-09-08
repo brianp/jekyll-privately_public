@@ -96,7 +96,7 @@ begin; require './_plugins/sitemap_generator'; rescue LoadError; end
 if defined?(Jekyll::SitemapGenerator)
   class Jekyll::SitemapGenerator
     def excluded?(name)
-      (!EXCLUDED_FILES.include?(name) || !Jekyll::PrivatelyPublic.post_names.include?(name))
+      (EXCLUDED_FILES.include?(name) || Jekyll::PrivatelyPublic.post_names.include?(name))
     end
   end
 end
