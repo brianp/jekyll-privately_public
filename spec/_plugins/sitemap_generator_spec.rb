@@ -20,21 +20,21 @@ describe Jekyll::PrivatelyPublic do
   end
 
   it 'creates a sitemap file with no private urls' do
-    results = []
-    File.readlines(@file).each do |line|
-      results << line.include?('/private/')
+    begin
+      file = File.open(@file, 'r')
+      file.read.include?('/private/').must_equal false
+    ensure
+      file.close
     end
-
-    results.include?(true).must_equal false
   end
 
   it 'creates a sitemap file with published posts' do
-    results = []
-    File.readlines(@file).each do |line|
-      results << line.include?('published-post')
+    begin
+      file = File.open(@file, 'r')
+      file.read.include?('published-post').must_equal true
+    ensure
+      file.close
     end
-
-    results.include?(true).must_equal true
   end
 
 end
