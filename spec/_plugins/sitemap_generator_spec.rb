@@ -3,7 +3,7 @@ require './spec/spec_helper'
 describe Jekyll::PrivatelyPublic do
   before do
     clear_dest
-#    suppress_output
+    suppress_output
     stub(Jekyll).configuration do
       Jekyll::Configuration::DEFAULTS.merge({'source' => source_dir,
                                              'destination' => dest_dir})
@@ -16,7 +16,7 @@ describe Jekyll::PrivatelyPublic do
   end
 
   after do
-#    unsuppress_output
+    unsuppress_output
   end
 
   it 'creates a sitemap file with no private urls' do
