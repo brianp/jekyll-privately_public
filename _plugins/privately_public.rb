@@ -6,7 +6,8 @@ require 'digest'
 #
 # Version: 0.2.0
 #
-# Copyright (c) 2013 Brian Pearce, http://www.alwayscoding.ca
+# Author: Brian Pearce
+# Site: http://www.alwayscoding.ca
 # Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php)
 #
 # A generator that creates privately public pages. Pages secured only by url
