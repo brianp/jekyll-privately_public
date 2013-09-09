@@ -7,4 +7,5 @@ group :development, :test do
   gem 'pry'
   gem 'guard'
   gem 'guard-minitest', '1.1.0'
+  gem 'rake'
 end
