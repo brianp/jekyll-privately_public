@@ -1,5 +1,5 @@
 # Privately Public
-[<img src="https://secure.travis-ci.org/brianp/jekyll-privately_public.png" alt="Build Status" />](http://travis-ci.org/brianp/jekyll-privately-public)
+[<img src="https://secure.travis-ci.org/brianp/jekyll-privately_public.png" alt="Build Status" />](http://travis-ci.org/brianp/jekyll-privately_public)
 
 A generator that creates privately public pages. Pages secured by url obscurity.
 
