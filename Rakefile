@@ -1,5 +1,3 @@
-require 'rubygems'
-require 'rake'
 require 'rake/testtask'
 
 Rake::TestTask.new(:spec) do |t|
