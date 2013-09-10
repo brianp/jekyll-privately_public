@@ -9,3 +9,8 @@ rvm:
   - jruby-19mode
   - ruby-head
   - 2.0.0
+
+branches:
+  only:
+    - master
+#    - octopress-v2
