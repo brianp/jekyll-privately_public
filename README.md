@@ -1,5 +1,5 @@
 # Privately Public
-[<img src="https://secure.travis-ci.org/brianp/jekyll-privately_public.png" alt="Build Status" />](http://travis-ci.org/brianp/jekyll-privately_public)
+[![Build Status](https://travis-ci.org/brianp/jekyll-privately_public.png?branch=master)](https://travis-ci.org/brianp/jekyll-privately_public)
 
 A generator that creates privately public pages. Pages secured by url obscurity.
 
@@ -14,18 +14,22 @@ Copy the `_plugins/privately_public.rb` file into your jekyll/octopress projects
 folder. Now in your posts YAML front-matter add the key `privpub:
 true`.
 
-    ---
-    layout: post
-    title: "My Awesome Post"
-    privpub: true
-    ---
+```yaml
+---
+layout: post
+title: "My Awesome Post"
+privpub: true
+---
+```
 
 You will now see output in the console when generating your site and you
 can grab the link from there:
 
-    [2013-09-04 21:51:25] regeneration: 1 files changed
-    PrivatleyPublic: Generated privately public links:
-    - /private/4d58d7/my-awesome-post
+```shell
+[2013-09-04 21:51:25] regeneration: 1 files changed
+PrivatleyPublic: Generated privately public links:
+- /private/4d58d7/my-awesome-post
+```
 
 You can now copy the relative path to access the privately public page
 and share it with friends!
