@@ -1,5 +1,6 @@
 # Privately Public
 [![Build Status](https://travis-ci.org/brianp/jekyll-privately_public.png?branch=master)](https://travis-ci.org/brianp/jekyll-privately_public)
+[![Code Climate](https://codeclimate.com/github/brianp/jekyll-privately_public.png)](https://codeclimate.com/github/brianp/jekyll-privately_public)
 
 A generator that creates privately public pages. Pages secured by url obscurity.
 
