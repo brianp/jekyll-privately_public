@@ -35,6 +35,17 @@ PrivatleyPublic: Generated privately public links:
 You can now copy the relative path to access the privately public page
 and share it with friends!
 
+## Custom Path
+I want to use a custom path instead of `/private/` in the url! All you have
+to do is define `privpub_path: /my/custom/dir` in your `_config.yml`.
+Then you will end up with output like below:
+
+```shell
+[2013-09-04 21:51:25] regeneration: 1 files changed
+PrivatleyPublic: Generated privately public links:
+- /my/custom/dir/4d58d7/my-awesome-post
+```
+
 ## Octopress
 Octopress runs on an older version of jekyll so checkout the
 `octopress-v2` branch for a plugin with backwards compatability with
