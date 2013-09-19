@@ -46,7 +46,7 @@ module Jekyll
     end
   end
 
-  class PrivatelyPublic
+  module PrivatelyPublic
 
     class Post < Jekyll::Post
       def permalink
