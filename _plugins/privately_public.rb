@@ -46,13 +46,10 @@ module Jekyll
     end
   end
 
-  module PrivatelyPublic
-
-    class Post < Jekyll::Post
-      def permalink
-        "#{privpub_path}/#{digest}/#{CGI.escape(slug)}"
       end
 
+  module PrivatelyPublic
+    module Permalinks
       protected
 
       def privpub_path
@@ -61,6 +58,14 @@ module Jekyll
 
       def digest
         CGI.escape(Digest::SHA1.hexdigest(slug)[0...6])
+      end
+    end
+
+    class Post < Jekyll::Post
+      include PrivatelyPublic::Permalinks
+
+      def permalink
+        "#{privpub_path}/#{digest}/#{CGI.escape(slug)}"
       end
     end
 
