@@ -1,4 +1,5 @@
 require 'digest'
+require 'pathname'
 
 # encoding: utf-8
 #
@@ -49,10 +50,14 @@ module Jekyll
 
     class Post < Jekyll::Post
       def permalink
-        "/private/#{digest}/#{CGI.escape(slug)}"
+        "#{privpub_path}/#{digest}/#{CGI.escape(slug)}"
       end
 
       protected
+
+      def privpub_path
+        !site.config[:privpub_path].nil? ? Pathname.new("/#{site.config[:privpub_path]}").cleanpath : '/private'
+      end
 
       def digest
         CGI.escape(Digest::SHA1.hexdigest(slug)[0...6])
