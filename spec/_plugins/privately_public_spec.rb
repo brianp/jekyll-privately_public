@@ -34,11 +34,31 @@ describe Jekyll::PrivatelyPublic do
   describe Jekyll::PrivatelyPublic::Post do
     subject { Jekyll::PrivatelyPublic::Post }
 
-    it 'creates the same url multiple times' do
-      entry = @site.privpub_posts.first.name
-      post = subject.new(@site, source_dir, '', entry)
+    before do
+      @entry = @site.privpub_posts.first
+    end
 
+    it 'creates the same url multiple times' do
+      post = subject.new(@site, source_dir, '', @entry.name)
       post.permalink.must_equal @private_url
+    end
+
+    it 'outputs /special/ as the privpub_path' do
+      @site.config[:privpub_path] = 'special'
+      @site.process
+      @entry.permalink.must_equal '/special/0426e1/privpub-post'
+    end
+
+    it 'strips leading and trailing slashes from the path' do
+      @site.config[:privpub_path] = '////special////'
+      @site.process
+      @entry.permalink.must_equal '/special/0426e1/privpub-post'
+    end
+
+    it 'allows multi level paths' do
+      @site.config[:privpub_path] = '/my/special/dir/'
+      @site.process
+      @entry.permalink.must_equal '/my/special/dir/0426e1/privpub-post'
     end
   end
 
