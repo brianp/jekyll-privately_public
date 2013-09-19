@@ -5,7 +5,7 @@ require 'pathname'
 #
 # Jekyll publisher for privateley public posts.
 #
-# Version: 0.2.0
+# Version: 0.3.0
 #
 # Author: Brian Pearce
 # Site: http://www.alwayscoding.ca
