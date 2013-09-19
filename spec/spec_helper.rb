@@ -7,7 +7,7 @@ require 'minitest/pride'
 require 'rr'
 require 'jekyll'
 
-Dir["./_plugins/**/*.rb"].each {|f| require f}
+Dir['./spec/support/**/*.rb', './_plugins/**/*.rb'].each {|f| require f}
 
 include Jekyll
 
