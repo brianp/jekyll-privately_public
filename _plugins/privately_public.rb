@@ -16,38 +16,6 @@ require 'pathname'
 # task. Links can be given to friends for previewing.
 
 module Jekyll
-
-  class Site
-    attr_accessor :privpub_posts
-
-    alias_method :previous_reset, :reset
-    def reset
-      self.privpub_posts = []
-      previous_reset
-    end
-
-    alias_method :previous_render, :render
-    def render
-      payload = site_payload
-      self.privpub_posts.each do |post|
-        post.render(self.layouts, payload)
-      end
-      previous_render
-    rescue Errno::ENOENT => e
-      # ignore missing layout dir
-    end
-
-    alias_method :previous_write, :write
-    def write
-      self.privpub_posts.each do |post|
-        post.write(self.dest)
-      end
-      previous_write
-    end
-  end
-
-      end
-
   module PrivatelyPublic
     module Permalinks
       protected
@@ -103,6 +71,53 @@ module Jekyll
         display_results(site)
       end
     end
-
   end
+
+  class Site
+    attr_accessor :privpub_posts
+
+    alias_method :previous_reset, :reset
+    def reset
+      self.privpub_posts = []
+      previous_reset
+    end
+
+    alias_method :previous_render, :render
+    def render
+      payload = site_payload
+      self.privpub_posts.each do |post|
+        post.render(self.layouts, payload)
+      end
+      previous_render
+    rescue Errno::ENOENT => e
+      # ignore missing layout dir
+    end
+
+    alias_method :previous_write, :write
+    def write
+      self.privpub_posts.each do |post|
+        post.write(self.dest)
+      end
+      previous_write
+    end
+  end
+
+  class Page
+    include PrivatelyPublic::Permalinks
+
+    def permalink
+      return nil if self.data.nil? || (self.data['permalink'].nil? && self.data['privpub'].nil?)
+
+      if self.data['permalink']
+        if site.config['relative_permalinks']
+          File.join(@dir, self.data['permalink'])
+        else
+          self.data['permalink']
+        end
+      else
+        "#{privpub_path}/#{digest}/#{CGI.escape(slug)}"
+      end
+    end
+  end
+
 end
