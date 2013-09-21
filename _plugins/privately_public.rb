@@ -25,7 +25,7 @@ module Jekyll
       end
 
       def digest
-        CGI.escape(Digest::SHA1.hexdigest(slug)[0...6])
+        CGI.escape(Digest::SHA1.hexdigest(uri_name)[0...6])
       end
     end
 
@@ -33,7 +33,13 @@ module Jekyll
       include PrivatelyPublic::Permalinks
 
       def permalink
-        "#{privpub_path}/#{digest}/#{CGI.escape(slug)}"
+        "#{privpub_path}/#{digest}/#{CGI.escape(uri_name)}"
+      end
+
+      private
+
+      def uri_name
+        slug
       end
     end
 
@@ -115,9 +121,14 @@ module Jekyll
           self.data['permalink']
         end
       else
-        "#{privpub_path}/#{digest}/#{CGI.escape(slug)}"
+        "#{privpub_path}/#{digest}/#{CGI.escape(uri_name)}"
       end
     end
-  end
 
+    private
+
+    def uri_name
+      basename
+    end
+  end
 end
