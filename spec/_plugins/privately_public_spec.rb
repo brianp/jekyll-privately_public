@@ -89,5 +89,10 @@ describe Jekyll::PrivatelyPublic do
       expectation = "   PrivatelyPublic: Generated privately public links:\n                    - /private/0426e1/privpub-post\n"
       out.must_equal expectation
     end
+
+    it 'checks for a privately public page' do
+      files = Dir.glob("#{dest_dir('private')}/*")
+      files.count.must_equal 2
+    end
   end
 end
