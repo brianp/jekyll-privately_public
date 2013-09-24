@@ -81,7 +81,7 @@ describe Jekyll::PrivatelyPublic do
     end
 
     it 'checks to see the file was created' do
-      File.exists?('spec/public/private/0426e1/privpub-post').must_equal true
+      File.exists?(dest_dir('private/0426e1/privpub-post')).must_equal true
     end
 
     it 'verifies the output contains a single post' do
