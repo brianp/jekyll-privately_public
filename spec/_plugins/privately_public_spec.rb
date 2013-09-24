@@ -80,6 +80,10 @@ describe Jekyll::PrivatelyPublic do
       @site.privpub_posts.count.must_equal 1
     end
 
+    it 'checks to see the file was created' do
+      File.exists?('spec/public/private/0426e1/privpub-post').must_equal true
+    end
+
     it 'verifies the output contains a single post' do
       gen = subject.new
       out = capture_stdout do
@@ -91,8 +95,7 @@ describe Jekyll::PrivatelyPublic do
     end
 
     it 'checks for a privately public page' do
-      files = Dir.glob("#{dest_dir('private')}/*")
-      files.count.must_equal 2
+      File.exists?('spec/public/private/e540cd/index').must_equal true
     end
   end
 end
