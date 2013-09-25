@@ -11,8 +11,6 @@ describe Jekyll::PrivatelyPublic do
 
     @site = Site.new(Jekyll.configuration)
     @site.process
-
-    @private_post_url = '/private/0426e1/privpub-post'
   end
 
   after do
@@ -40,7 +38,7 @@ describe Jekyll::PrivatelyPublic do
 
     it 'creates the same url multiple times' do
       post = subject.new(@site, source_dir, '', @entry.name)
-      post.permalink.must_equal @private_post_url
+      post.permalink.must_equal private_post_url
     end
 
     it 'outputs /special/ as the privpub_path' do
@@ -81,7 +79,7 @@ describe Jekyll::PrivatelyPublic do
     end
 
     it 'checks to see the file was created' do
-      File.exists?(dest_dir(@private_post_url)).must_equal true
+      File.exists?(dest_dir(private_post_url)).must_equal true
     end
 
     it 'verifies the output contains a single post' do
