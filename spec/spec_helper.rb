@@ -47,3 +47,7 @@ end
 def unsuppress_output
   $stdout = $suppressed_stdout
 end
+
+def private_post_url
+  @private_post_url = '/private/0426e1/privpub-post'
+end
