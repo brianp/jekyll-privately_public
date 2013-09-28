@@ -128,7 +128,7 @@ module Jekyll
     alias_method :previous_url, :url
     def url
       if data['privpub'] == true
-        "#{privpub_path}/#{digest}/#{CGI.escape(@dir)}"
+        "#{privpub_path}/#{digest}/#{@dir}"
       else
         previous_url
       end
