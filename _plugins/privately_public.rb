@@ -111,20 +111,6 @@ module Jekyll
   class Page
     include PrivatelyPublic::Permalinks
 
-    #def permalink
-    #  return nil if self.data.nil? || (self.data['permalink'].nil? && self.data['privpub'].nil?)
-
-    #  if self.data['permalink']
-    #    if site.config['relative_permalinks']
-    #      File.join(@dir, self.data['permalink'])
-    #    else
-    #      self.data['permalink']
-    #    end
-    #  else
-    #    "#{privpub_path}/#{digest}/#{CGI.escape(uri_name)}"
-    #  end
-    #end
-
     alias_method :previous_url, :url
     def url
       if data['privpub'] == true
@@ -134,19 +120,19 @@ module Jekyll
       end
     end
 
-    #def template
-    #  if self.site.permalink_style == :pretty
-    #    if index? && html?
-    #      "/:path/"
-    #    elsif html?
-    #      "/:path/:basename/"
-    #    else
-    #      "/:path/:basename:output_ext"
-    #    end
-    #  else
-    #    "/:path/:basename:output_ext"
-    #  end
-    #end
+    def template
+      if self.site.permalink_style == :pretty
+        if index? && html?
+          "/:path/"
+        elsif html?
+          "/:path/:basename/"
+        else
+          "/:path/:basename:output_ext"
+        end
+      else
+        "/:path/:basename:output_ext"
+      end
+    end
 
     private
 
