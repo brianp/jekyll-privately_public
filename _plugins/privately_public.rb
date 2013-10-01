@@ -20,6 +20,10 @@ module Jekyll
     module Permalinks
       protected
 
+      def privpub?
+        data['privpub'] == true
+      end
+
       def privpub_path
         !site.config[:privpub_path].nil? ? Pathname.new("/#{site.config[:privpub_path]}").cleanpath : '/private'
       end
@@ -32,8 +36,8 @@ module Jekyll
     class Post < Jekyll::Post
       include PrivatelyPublic::Permalinks
 
-      def permalink
-        "#{privpub_path}/#{digest}/#{CGI.escape(uri_name)}"
+      def url
+        privpub? ? "#{privpub_path}/#{digest}/#{CGI.escape(uri_name)}" : super
       end
 
       private
@@ -113,31 +117,13 @@ module Jekyll
 
     alias_method :previous_url, :url
     def url
-      if data['privpub'] == true
-        "#{privpub_path}/#{digest}/#{@dir}"
-      else
-        previous_url
-      end
-    end
-
-    def template
-      if self.site.permalink_style == :pretty
-        if index? && html?
-          "/:path/"
-        elsif html?
-          "/:path/:basename/"
-        else
-          "/:path/:basename:output_ext"
-        end
-      else
-        "/:path/:basename:output_ext"
-      end
+      privpub? ? "#{privpub_path}/#{digest}/#{uri_name}" : previous_url
     end
 
     private
 
     def uri_name
-      basename
+      @dir
     end
   end
 end
