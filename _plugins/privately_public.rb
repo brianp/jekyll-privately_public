@@ -66,11 +66,14 @@ module Jekyll
         end
       end
 
-      def display_results(site)
-        if !site.privpub_posts.empty?
+      def self.display_results(site)
+        privpub_path = site.config[:privpub_path]
+        paths = Dir.glob("#{dest_dir(privpub_path)}/*")
+
+        unless paths.empty?
           puts Jekyll.logger.message('PrivatelyPublic:', 'Generated privately public links:')
 
-          site.privpub_posts.each do |p|
+          paths.each do |p|
             puts Jekyll.logger.message('',  "- #{p.permalink}")
           end
         end
@@ -78,7 +81,6 @@ module Jekyll
 
       def generate(site)
         read_posts(site)
-        display_results(site)
       end
     end
   end
