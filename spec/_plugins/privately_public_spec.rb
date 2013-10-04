@@ -93,7 +93,7 @@ describe Jekyll::PrivatelyPublic do
     end
 
     it 'checks for a privately public page' do
-      File.exists?('spec/public/private/e540cd/index').must_equal true
+      File.exists?('spec/public/private/eda4eb/contact').must_equal true
     end
   end
 end
