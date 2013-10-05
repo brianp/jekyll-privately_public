@@ -66,7 +66,7 @@ module Jekyll
         end
       end
 
-      def self.display_results(site)
+      def display_results(site)
         privpub_path = site.config[:privpub_path]
         paths = Dir.glob("#{dest_dir(privpub_path)}/*")
 
