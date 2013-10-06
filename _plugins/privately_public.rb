@@ -47,7 +47,16 @@ module Jekyll
       end
     end
 
-    class Generator < Jekyll::Generator
+    class PageGenerator < Jekyll::Generator
+      safe true
+      priority :normal
+
+      def generate(site)
+        read_posts(site)
+      end
+    end
+
+    class PostGenerator < Jekyll::Generator
       safe true
       priority :normal
 
