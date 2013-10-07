@@ -51,6 +51,12 @@ module Jekyll
       safe true
       priority :normal
 
+      def read_posts(site)
+        site.posts.each do |post|
+          #remove from list
+        end
+      end
+
       def generate(site)
         read_posts(site)
       end
