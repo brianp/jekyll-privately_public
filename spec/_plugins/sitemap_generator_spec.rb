@@ -28,6 +28,15 @@ describe Jekyll::PrivatelyPublic do
     end
   end
 
+  it 'creates a sitemap file with no private page url' do
+    begin
+      file = File.open(@file, 'r')
+      file.read.include?(private_page_url).must_equal false
+    ensure
+      file.close
+    end
+  end
+
   it 'creates a sitemap file with no private post url' do
     begin
       file = File.open(@file, 'r')
