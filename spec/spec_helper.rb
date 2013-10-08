@@ -51,3 +51,7 @@ end
 def private_post_url
   @private_post_url = '/private/0426e1/privpub-post'
 end
+
+def private_page_url
+  @private_page_url = '/private/eda4eb/contact'
+end
