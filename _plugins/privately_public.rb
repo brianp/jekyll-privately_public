@@ -67,8 +67,11 @@ module Jekyll
       priority :high
 
       def read_posts(site)
-        site.posts.each do |post|
-          #remove from list
+        site.pages.each do |page|
+          if page.data.has_key?('privpub') && page.data['privpub'] == true
+            site.pages.delete(page)
+            site.privpub_pages << PrivatelyPublic::Page.new(site, site.source, page.dir, page.name)
+          end
         end
       end
 
