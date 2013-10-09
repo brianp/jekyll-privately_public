@@ -63,7 +63,8 @@ module Jekyll
 
     class PageGenerator < Jekyll::Generator
       safe true
-      priority :normal
+      # Priority set to high as it removes items from the pages array.
+      priority :high
 
       def read_posts(site)
         site.posts.each do |post|
