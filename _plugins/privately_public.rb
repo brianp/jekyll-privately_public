@@ -145,22 +145,7 @@ module Jekyll
       self.privpub_posts.each do |post|
         post.write(self.dest)
       end
-      previous_write
-    end
-  end
 
-  class Page
-    include PrivatelyPublic::Permalinks
-
-    alias_method :previous_url, :url
-    def url
-      privpub? ? "#{privpub_path}/#{digest}/#{uri_name}" : previous_url
-    end
-
-    private
-
-    def uri_name
-      @dir
       self.privpub_pages.each do |page|
         page.write(self.dest)
       end
