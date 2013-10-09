@@ -116,11 +116,12 @@ module Jekyll
   end
 
   class Site
-    attr_accessor :privpub_posts
+    attr_accessor :privpub_posts, :privpub_pages
 
     alias_method :previous_reset, :reset
     def reset
       self.privpub_posts = []
+      self.privpub_pages = []
       previous_reset
     end
 
@@ -129,6 +130,10 @@ module Jekyll
       payload = site_payload
       self.privpub_posts.each do |post|
         post.render(self.layouts, payload)
+      end
+
+      self.privpub_pages.each do |page|
+        page.render(self.layouts, payload)
       end
       previous_render
     rescue Errno::ENOENT => e
@@ -156,6 +161,10 @@ module Jekyll
 
     def uri_name
       @dir
+      self.privpub_pages.each do |page|
+        page.write(self.dest)
+      end
+      previous_write
     end
   end
 end
