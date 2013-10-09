@@ -100,10 +100,7 @@ module Jekyll
       end
 
       def display_results(site)
-        privpub_path = site.config[:privpub_path]
-        paths = Dir.glob("#{dest_dir(privpub_path)}/*")
-
-        unless paths.empty?
+        if !site.privpub_posts.empty?
           puts Jekyll.logger.message('PrivatelyPublic:', 'Generated privately public links:')
 
           paths.each do |p|
