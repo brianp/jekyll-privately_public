@@ -90,7 +90,7 @@ module Jekyll
         # first pass processes, but does not yet render post content
         entries.each do |f|
           if Post.valid?(f)
-            post = Post.new(site, site.source, '', f)
+            post = PrivatelyPublic::Post.new(site, site.source, '', f)
 
             if post.data.has_key?('privpub') && post.data['privpub'] == true
               site.privpub_posts << post
