@@ -33,6 +33,20 @@ module Jekyll
       end
     end
 
+    class Page < Jekyll::Page
+      include Permalinks
+
+      def url
+        privpub? ? "#{privpub_path}/#{digest}/#{CGI.escape(uri_name)}" : super
+      end
+
+      private
+
+      def uri_name
+        @dir
+      end
+    end
+
     class Post < Jekyll::Post
       include PrivatelyPublic::Permalinks
 
